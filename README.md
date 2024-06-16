@@ -20,10 +20,10 @@ This is a SaaS solution where customers can create shipments, and delivery partn
 ## Getting Started
 
 ### Clone the repository
-
-```bash
+ 
 git clone https://github.com/sureshaluka/shipment-service.git
 cd shipment-service
+
 
 ###  Configure PostgreSQL
 Create a PostgreSQL database and update the database configurations in src/main/resources/application.properties
@@ -33,5 +33,34 @@ spring.datasource.password=yourpassword
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
+### Build and Run the Application 
+mvn clean install
+mvn spring-boot:run
+The application will start at http://localhost:8080.
 
+### Swagger UI
+Access the Swagger UI for API documentation at http://localhost:8080/swagger-ui/.
 
+### API Endpoints
+## Customer Endpoints
+POST /customers - Add a new customer
+GET /customers - Get all customers
+DELETE /customers/{id} - Delete a customer by ID
+
+## Delivery Partner Endpoints
+POST /delivery-partners - Add a new delivery partner
+GET /delivery-partners - Get all delivery partners
+DELETE /delivery-partners/{id} - Delete a delivery partner by ID
+
+## Shipment Endpoints
+POST /shipments - Create a new shipment
+GET /shipments/delivery-partner/{id} - Get all shipments for a delivery partner by ID
+PUT /shipments/{id}/status - Update the status of a shipment by ID
+
+### Running Tests
+To run the unit tests, use the following command: 
+mvn test
+
+### Logging
+The application uses SLF4J and Logback for logging.
+You can configure the logging settings in src/main/resources/logback-spring.xml.
