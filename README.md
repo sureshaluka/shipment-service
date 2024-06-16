@@ -25,7 +25,7 @@ This is a SaaS solution where customers can create shipments, and delivery partn
 git clone https://github.com/sureshaluka/shipment-service.git
 cd shipment-service
 
-## Configure PostgreSQL
+###  Configure PostgreSQL
 Create a PostgreSQL database and update the database configurations in src/main/resources/application.properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/yourdb
 spring.datasource.username=yourusername
