@@ -6,8 +6,7 @@ This is a SaaS solution where customers can create shipments, and delivery partn
 
 - Customer management
 - Delivery partner management
-- Shipment management
-- OAuth2 security
+- Shipment management 
 - PostgreSQL database integration
 - Swagger API documentation
 
@@ -40,7 +39,7 @@ The application will start at http://localhost:8080.
 
 ### Swagger UI
 Access the Swagger UI for API documentation at 
-- http://localhost:8080/swagger-ui/.
+- http://localhost:8080/swagger-ui/index.html
 
 ### API Endpoints
 ## Customer Endpoints
@@ -62,6 +61,4 @@ Access the Swagger UI for API documentation at
 To run the unit tests, use the following command: 
 - mvn test
 
-### Logging
-The application uses SLF4J and Logback for logging.
-- You can configure the logging settings in src/main/resources/logback-spring.xml.
+ 
