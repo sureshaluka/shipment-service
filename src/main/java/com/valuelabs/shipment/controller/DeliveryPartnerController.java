@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/delivery-partners")
+@RequestMapping("/delivery-partner")
 @Tag(name = "DeliveryPartner", description = "DeliveryPartner APIs")
 @RequiredArgsConstructor
 @Slf4j

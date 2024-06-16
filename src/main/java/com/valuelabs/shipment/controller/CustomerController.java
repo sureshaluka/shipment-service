@@ -2,6 +2,7 @@ package com.valuelabs.shipment.controller;
 
 
 import com.valuelabs.shipment.entity.Customer;
+import com.valuelabs.shipment.exceptions.ResourceNotFoundException;
 import com.valuelabs.shipment.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @Tag(name = "Customer", description = "Customer APIs")
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/customer")
 @RequiredArgsConstructor
 @Slf4j
 public class CustomerController {
@@ -34,6 +35,19 @@ public class CustomerController {
     public Customer addCustomer(@RequestBody Customer customer) {
         log.info("entered in addCustomer");
         return customerService.addCustomer(customer);
+    }
+    @Operation(
+            summary = "Get customer by id",
+            description = "Get customer by id.",
+            tags = { "customer", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
     }
 
     @Operation(
@@ -61,6 +75,9 @@ public class CustomerController {
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable Long id) {
         log.info("deletes allCustomer");
+        if (!customerService.existsById(id)) {
+            throw new ResourceNotFoundException("Customer not found with id: " + id);
+        }
         customerService.deleteCustomer(id);
     }
 }

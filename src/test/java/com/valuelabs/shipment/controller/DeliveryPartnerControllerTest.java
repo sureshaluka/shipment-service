@@ -1,5 +1,6 @@
 package com.valuelabs.shipment.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.valuelabs.shipment.entity.Customer;
 import com.valuelabs.shipment.entity.DeliveryPartner;
 import com.valuelabs.shipment.service.DeliveryPartnerService;
@@ -27,6 +28,9 @@ public class DeliveryPartnerControllerTest {
     @MockBean
     private DeliveryPartnerService deliveryPartnerService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
     public void testGetAllDeliveryPartners() throws Exception {
         DeliveryPartner deliveryPartner = new DeliveryPartner();
@@ -35,7 +39,7 @@ public class DeliveryPartnerControllerTest {
 
         given(deliveryPartnerService.getAllDeliveryPartners()).willReturn(Arrays.asList(deliveryPartner));
 
-        mockMvc.perform(get("/delivery-partners"))
+        mockMvc.perform(get("/delivery-partner"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Suresh"));
     }
@@ -48,9 +52,9 @@ public class DeliveryPartnerControllerTest {
 
         given(deliveryPartnerService.addDeliveryPartner(deliveryPartner)).willReturn(deliveryPartner);
 
-        mockMvc.perform(post("/delivery-partners")
+        mockMvc.perform(post("/delivery-partner")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Suresh\"}"))
+                .content(objectMapper.writeValueAsString(deliveryPartner)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Suresh"));
     }

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,4 +31,17 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("in deleteCustomer service");
         customerRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        log.info("in existsById service");
+        return customerRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public Optional<Customer> getCustomerById(Long id) {
+        log.info("in getCustomerById service");
+        return customerRepository.findById(id);
+    }
+
 }

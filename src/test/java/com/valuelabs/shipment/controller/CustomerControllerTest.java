@@ -1,6 +1,7 @@
 package com.valuelabs.shipment.controller;
 
 import com.valuelabs.shipment.entity.Customer;
+import com.valuelabs.shipment.exceptions.ResourceNotFoundException;
 import com.valuelabs.shipment.service.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,7 @@ public class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
-    @Test
-    public void testGetAllCustomers() throws Exception {
-        Customer customer = new Customer();
-        customer.setId(1L);
-        customer.setName("Suresh");
-        customer.setEmail("sureshaluka@gmail.com");
 
-        given(customerService.getAllCustomers()).willReturn(Arrays.asList(customer));
-
-        mockMvc.perform(get("/customers"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Suresh"));
-    }
 
     @Test
     public void testAddCustomer() throws Exception {
@@ -46,10 +35,34 @@ public class CustomerControllerTest {
 
         given(customerService.addCustomer(customer)).willReturn(customer);
 
-        mockMvc.perform(post("/customers")
+        mockMvc.perform(post("/customer")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Suresh\", \"email\":\"sureshaluka@gmail.com\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Suresh"));
+    }
+
+    @Test
+    public void testGetCustomerById() throws Exception {
+
+
+        given(customerService.getCustomerById(100L)).willThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get("/customer/100"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testGetAllCustomers() throws Exception {
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Suresh");
+        customer.setEmail("sureshaluka@gmail.com");
+
+        given(customerService.getAllCustomers()).willReturn(Arrays.asList(customer));
+
+        mockMvc.perform(get("/customer"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Suresh"));
     }
 }
