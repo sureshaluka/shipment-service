@@ -22,7 +22,16 @@ This is a SaaS solution where customers can create shipments, and delivery partn
 ### Clone the repository
 
 ```bash
-git clone https://github.com/sureshaluka/saas-solution.git
-cd saas-solution
+git clone https://github.com/sureshaluka/shipment-service.git
+cd shipment-service
+
+## Configure PostgreSQL
+Create a PostgreSQL database and update the database configurations in src/main/resources/application.properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/yourdb
+spring.datasource.username=yourusername
+spring.datasource.password=yourpassword
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
 
 
