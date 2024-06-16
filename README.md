@@ -40,7 +40,7 @@ The application will start at http://localhost:8080.
 
 ### Swagger UI
 Access the Swagger UI for API documentation at 
-- http://localhost:8080/swagger-ui/.
+- http://localhost:8080/swagger-ui/index.html
 
 ### API Endpoints
 ## Customer Endpoints
