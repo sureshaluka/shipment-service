@@ -1,4 +1,4 @@
-# SaaS Solution Spring Boot Application
+# Shipment Service
 
 This is a SaaS solution where customers can create shipments, and delivery partners can see and update the status of their assigned shipments. The application uses Spring Boot, OAuth2 for security, PostgreSQL for the database, and Swagger for API documentation.
 
