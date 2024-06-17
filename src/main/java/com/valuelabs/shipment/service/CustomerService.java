@@ -1,5 +1,6 @@
 package com.valuelabs.shipment.service;
 
+import com.valuelabs.shipment.dto.CustomerDTO;
 import com.valuelabs.shipment.entity.Customer;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Optional;
 
 public interface CustomerService {
 
-    public Customer addCustomer(Customer customer) ;
+    public Customer addCustomer(CustomerDTO customerDTO) ;
 
     public List<Customer> getAllCustomers();
 

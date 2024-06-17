@@ -1,5 +1,6 @@
 package com.valuelabs.shipment.controller;
 
+import com.valuelabs.shipment.dto.DeliveryPartnerDTO;
 import com.valuelabs.shipment.entity.DeliveryPartner;
 import com.valuelabs.shipment.service.DeliveryPartnerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,11 +29,11 @@ public class DeliveryPartnerController {
             description = "Add a new delivery partner",
             tags = { "DeliveryPartner", "post" })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = DeliveryPartner.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = DeliveryPartnerDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public DeliveryPartner addDeliveryPartner(@RequestBody DeliveryPartner deliveryPartner) {
+    public DeliveryPartner addDeliveryPartner(@RequestBody DeliveryPartnerDTO deliveryPartner) {
         log.info("in addDeliveryPartner");
         return deliveryPartnerService.addDeliveryPartner(deliveryPartner);
     }

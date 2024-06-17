@@ -1,5 +1,6 @@
 package com.valuelabs.shipment.service.impl;
 
+import com.valuelabs.shipment.dto.CustomerDTO;
 import com.valuelabs.shipment.entity.Customer;
 import com.valuelabs.shipment.repository.CustomerRepository;
 import com.valuelabs.shipment.service.CustomerService;
@@ -16,6 +17,14 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+
+    public Customer addCustomer(CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+        customer.setName(customerDTO.getName());
+        customer.setEmail(customerDTO.getEmail());
+        return customerRepository.save(customer);
+    }
+
 
     public Customer addCustomer(Customer customer) {
         log.info("in addCustomer service");

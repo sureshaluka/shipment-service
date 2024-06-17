@@ -1,11 +1,13 @@
 package com.valuelabs.shipment.service;
 
+import com.valuelabs.shipment.dto.ShipmentDTO;
 import com.valuelabs.shipment.entity.Shipment;
 
 import java.util.List;
 
 public interface ShipmentService {
-    public Shipment createShipment(Shipment shipment) ;
+
+    public Shipment createShipment(ShipmentDTO shipmentDTO) ;
 
     public List<Shipment> getShipmentsForDeliveryPartner(Long deliveryPartnerId) ;
 

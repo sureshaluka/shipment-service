@@ -1,6 +1,7 @@
 package com.valuelabs.shipment.controller;
 
 
+import com.valuelabs.shipment.dto.CustomerDTO;
 import com.valuelabs.shipment.entity.Customer;
 import com.valuelabs.shipment.exceptions.ResourceNotFoundException;
 import com.valuelabs.shipment.service.CustomerService;
@@ -12,8 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 @Tag(name = "Customer", description = "Customer APIs")
 @RestController
@@ -23,25 +26,26 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+
     @Operation(
             summary = "Add a new customer",
             description = "Add a new customer.",
             tags = { "customer", "post" })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public Customer addCustomer(@RequestBody Customer customer) {
+    public Customer addCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         log.info("entered in addCustomer");
-        return customerService.addCustomer(customer);
+        return customerService.addCustomer(customerDTO);
     }
     @Operation(
             summary = "Get customer by id",
             description = "Get customer by id.",
             tags = { "customer", "get" })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/{id}")

@@ -1,6 +1,7 @@
 package com.valuelabs.shipment.service;
 
 
+import com.valuelabs.shipment.dto.DeliveryPartnerDTO;
 import com.valuelabs.shipment.entity.DeliveryPartner;
 import com.valuelabs.shipment.repository.DeliveryPartnerRepository;
 import com.valuelabs.shipment.service.impl.DeliveryPartnerServiceImpl;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class DeliveryPartnerServiceTest {
@@ -30,38 +32,45 @@ public class DeliveryPartnerServiceTest {
     }
 
     @Test
-    void addDeliveryPartner() {
+    public void testAddDeliveryPartner() {
+        DeliveryPartnerDTO deliveryPartnerDTO = new DeliveryPartnerDTO();
+        deliveryPartnerDTO.setName("John Doe");
+
         DeliveryPartner deliveryPartner = new DeliveryPartner();
-        deliveryPartner.setName("Jane Doe");
+        deliveryPartner.setName(deliveryPartnerDTO.getName());
 
-        when(deliveryPartnerRepository.save(deliveryPartner)).thenReturn(deliveryPartner);
+        when(deliveryPartnerRepository.save(any(DeliveryPartner.class))).thenReturn(deliveryPartner);
 
-        DeliveryPartner savedDeliveryPartner = deliveryPartnerService.addDeliveryPartner(deliveryPartner);
+        DeliveryPartner result = deliveryPartnerService.addDeliveryPartner(deliveryPartnerDTO);
+        assertNotNull(result);
+        assertEquals(deliveryPartnerDTO.getName(), result.getName());
 
-        assertEquals("Jane Doe", savedDeliveryPartner.getName());
-        verify(deliveryPartnerRepository, times(1)).save(deliveryPartner);
+        verify(deliveryPartnerRepository, times(1)).save(any(DeliveryPartner.class));
     }
 
     @Test
-    void getAllDeliveryPartners() {
-        DeliveryPartner deliveryPartner = new DeliveryPartner();
-        deliveryPartner.setName("Jane Doe");
+    public void testGetAllDeliveryPartners() {
+        DeliveryPartner deliveryPartner1 = new DeliveryPartner();
+        deliveryPartner1.setName("John Doe");
 
-        when(deliveryPartnerRepository.findAll()).thenReturn(Arrays.asList(deliveryPartner));
+        DeliveryPartner deliveryPartner2 = new DeliveryPartner();
+        deliveryPartner2.setName("Jane Doe");
+
+        when(deliveryPartnerRepository.findAll()).thenReturn(Arrays.asList(deliveryPartner1, deliveryPartner2));
 
         List<DeliveryPartner> deliveryPartners = deliveryPartnerService.getAllDeliveryPartners();
+        assertEquals(2, deliveryPartners.size());
+        assertEquals("John Doe", deliveryPartners.get(0).getName());
+        assertEquals("Jane Doe", deliveryPartners.get(1).getName());
 
-        assertEquals(1, deliveryPartners.size());
-        assertEquals("Jane Doe", deliveryPartners.get(0).getName());
         verify(deliveryPartnerRepository, times(1)).findAll();
     }
 
     @Test
-    void deleteDeliveryPartner() {
-        Long id = 1L;
-
-        deliveryPartnerService.deleteDeliveryPartner(id);
-
-        verify(deliveryPartnerRepository, times(1)).deleteById(id);
+    public void testDeleteDeliveryPartner() {
+        Long deliveryPartnerId = 1L;
+        doNothing().when(deliveryPartnerRepository).deleteById(deliveryPartnerId);
+        deliveryPartnerService.deleteDeliveryPartner(deliveryPartnerId);
+        verify(deliveryPartnerRepository, times(1)).deleteById(deliveryPartnerId);
     }
 }

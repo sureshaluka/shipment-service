@@ -1,5 +1,6 @@
 package com.valuelabs.shipment.controller;
 
+import com.valuelabs.shipment.dto.ShipmentDTO;
 import com.valuelabs.shipment.entity.Shipment;
 import com.valuelabs.shipment.service.ShipmentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,11 +29,11 @@ public class ShipmentController {
             description = "Creates a new Shipment.",
             tags = { "Shipment", "post" })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Shipment.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ShipmentDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public Shipment createShipment(@RequestBody Shipment shipment) {
+    public Shipment createShipment(@RequestBody ShipmentDTO shipment) {
         log.info("in createShipment");
         return shipmentService.createShipment(shipment);
     }
@@ -56,7 +57,7 @@ public class ShipmentController {
             description = "Updates shipment details.",
             tags = { "Shipment", "put" })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Shipment.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ShipmentDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PutMapping("/{id}/status")
